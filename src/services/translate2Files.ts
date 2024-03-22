@@ -21,6 +21,11 @@ export async function translate2Files (props: IReqBody) {
                 lang: lang,
                 content: JSON.stringify(res)
             })
+
+            await new Promise((resolve) => {
+                // Open AI RPM=3
+                setTimeout(() => resolve(null), 25000);
+            });
         } catch (error) {
             console.error(error);
         }

@@ -111,6 +111,8 @@ const Translate: React.FC = (props) => {
                         {loading && <Spinner />}
                         Translate
                     </button>
+                </div>
+                <div className="dark flex items-center mt-2">
                     <ExportFiles originalContent={originalContent} fileType={fileType} />
                 </div>
                 <div className="mt-2">
