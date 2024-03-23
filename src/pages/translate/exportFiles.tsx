@@ -115,7 +115,7 @@ const ExportFiles: React.FC<ExportFilesProps> = (props) => {
                 <fieldset>
                     <legend className="text-base font-semibold leading-6 text-gray-50">Languages</legend>
                     <div className="mt-4 divide-y divide-gray-600 border-t border-b border-gray-600">
-                        {locales.map(l => <div>{l.locale} {l.lang}</div>)}
+                        {locales.map(l => <div key={l.locale}>{l.locale} {l.lang}</div>)}
                         {/*{intlLanguages.map((lang, personIdx) => (*/}
                         {/*    <div key={personIdx} className="relative flex items-start py-2">*/}
                         {/*        <div className="min-w-0 flex-1 text-sm leading-6">*/}

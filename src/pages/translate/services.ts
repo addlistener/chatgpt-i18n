@@ -53,8 +53,16 @@ export async function makeLocalesInZip (data: { locale: string; lang: string, co
     const zipFileWriter = new BlobWriter();
     const zipWriter = new ZipWriter(zipFileWriter);
     for (let item of data) {
-        const content = new TextReader('export default ' + item.content + ' as const;');
-        await zipWriter.add(`${item.locale}.${fileType}`, content);
+        try {
+            // to make git diff & partial modification easier
+            const parsedContent = JSON.parse(item.content);
+            const formattedContent = JSON.stringify(parsedContent, null, 2);
+
+            const content = new TextReader('export default ' + formattedContent + ' as const;');
+            await zipWriter.add(`${item.locale}.${fileType}`, content);
+        } catch (e) {
+            console.error(e);
+        }
     }
     const blob = await zipWriter.close();
     return new File([blob], `locales.${fileType}`);
