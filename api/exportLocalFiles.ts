@@ -31,6 +31,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
                     },
                 ],
                 max_tokens: 1000,
+                temperature: 0,
             }, { timeout:5000 });
             result.push({
                 lang,
