@@ -1,6 +1,7 @@
 import { buildJsonByPairs } from "../../api/utils/utils";
 import { IMessage, IUserSetting } from "../interface";
 import { compressValuesInJson, createChatCompletion, groupPairs, matchJSON } from "../utils";
+import JSON5 from "json5";
 
 interface IReqBody {
     content: string;
@@ -32,7 +33,7 @@ export async function translateService(req: IReqBody) {
         });
     }
     const pairs: [string, any][] = [];
-    const locale = JSON.parse(content);
+    const locale = JSON5.parse(content);
     compressValuesInJson(locale, "", pairs);
     const { requireTranslation, noTranslation } = groupPairs(pairs);
     console.log({
