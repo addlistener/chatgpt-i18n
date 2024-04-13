@@ -54,6 +54,12 @@ const ExportFiles: React.FC<ExportFilesProps> = (props) => {
     };
 
     async function downloadFiles() {
+        const fileName = prompt('input file name (without extension)');
+        if (!fileName) {
+            alert('please input file name');
+            return;
+        }
+        console.log({fileName});
         setLoading(true);
         try {
             const compressedContent = compress(originalContent, props.fileType);
@@ -63,7 +69,8 @@ const ExportFiles: React.FC<ExportFilesProps> = (props) => {
                 langList: locales.map(l => l.lang),
                 config: toJS(commonStore.config)
             })
-            const file = await makeLocalesInZip(resultList.map((item) => {
+            const file = await makeLocalesInZip(
+              resultList.map((item) => {
                 const found = locales.find(l => l.lang === item.lang);
                 if (!found) {
                     console.error('locale not found', item);
@@ -76,7 +83,10 @@ const ExportFiles: React.FC<ExportFilesProps> = (props) => {
                   ...item,
                   locale: found.locale as string,
                 };
-            }), 'ts');
+              }),
+              fileName,
+              'ts'
+            );
             downloadFileFromBlob(file, "locales.zip");
         } catch (error) {
             notify(

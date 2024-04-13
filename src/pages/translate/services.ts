@@ -49,7 +49,7 @@ export async function exportLocalFiles(content: string, langList: string[], file
     }
 }
 
-export async function makeLocalesInZip (data: { locale: string; lang: string, content: string }[], fileType: FileType): Promise<File> {
+export async function makeLocalesInZip (data: { locale: string; lang: string, content: string }[], fileName: string, fileType: FileType): Promise<File> {
     const zipFileWriter = new BlobWriter();
     const zipWriter = new ZipWriter(zipFileWriter);
     for (let item of data) {
@@ -59,7 +59,7 @@ export async function makeLocalesInZip (data: { locale: string; lang: string, co
             const formattedContent = JSON.stringify(parsedContent, null, 2);
 
             const content = new TextReader('export default ' + formattedContent + ' as const;');
-            await zipWriter.add(`${item.locale}.${fileType}`, content);
+            await zipWriter.add(`${item.locale}/${fileName}.${fileType}`, content);
         } catch (e) {
             console.error(e);
         }
