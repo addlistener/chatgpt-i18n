@@ -116,6 +116,6 @@ export async function translateService(req: IReqBody) {
     const translated = (await Promise.all(tasks)).flatMap((t) => t);
     const nextPairs = (translated.map((t, i) => [requireTranslation[i][0], t]) as [string, string][]).concat(noTranslation);
     const result = buildJsonByPairs(nextPairs);
-    console.log(result)
+    console.log(req.targetLang + ' finished', result);
     return result;
 }
