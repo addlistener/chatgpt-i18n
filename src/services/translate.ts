@@ -16,7 +16,7 @@ export async function translateService(req: IReqBody) {
         {
             role: "system",
             content: `You are a helpful assistant that translates a i18n locale array content to ${targetLang}. 
-            It's a array structure, contains many strings, translate each of them and make a new array of translated strings.
+            It's a array structure, contains many strings, translate each of them and make a new array of translated strings. Make sure to include each array element.
             Consider all the string as a context to make better translation.\n`,
         },
     ];
