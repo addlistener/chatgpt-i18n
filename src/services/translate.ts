@@ -42,7 +42,7 @@ export async function translateService(req: IReqBody) {
         noTranslation
     })
     const tasks: string[][] = [];
-    const CHUNK_SIZE = 1000;
+    const CHUNK_SIZE = 300;
     let chunk: string[] = [];
     let chunkSize = 0;
     let chunkIndex = 0;
@@ -51,6 +51,7 @@ export async function translateService(req: IReqBody) {
         chunkSize += requireTranslation[i][1].length;
         if (chunkSize >= CHUNK_SIZE) {
             const freezeChunk = [...chunk];
+            console.log('sending chunk', chunkIndex, freezeChunk.length, freezeChunk);
             const finishedTask = await createChatCompletion(
                 {
                     model: "gpt-3.5-turbo",
@@ -71,6 +72,7 @@ export async function translateService(req: IReqBody) {
                 .then((r) => {
                     if (r.length !== freezeChunk.length) {
                         console.log("diff ", r, freezeChunk);
+                        alert('diff'!);
                     }
                     return r;
                 })
