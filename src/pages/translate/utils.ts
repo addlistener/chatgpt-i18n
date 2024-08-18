@@ -4,7 +4,9 @@ import JSON5 from 'json5'
 
 export function compress(content: string, fileType: FileType): string {
     try {
-        return fileType === "json" ? JSON5.stringify(JSON5.parse(content)) : JSON.stringify(yaml.load(content)) as string;
+        return fileType === "json" ? JSON5.stringify(
+          eval(`(() => (${content}))()`)
+        ) : JSON.stringify(yaml.load(content)) as string;
     } catch (error) {
         throw new Error(`${fileType} is not valid`)
     }

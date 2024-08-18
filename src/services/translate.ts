@@ -33,7 +33,7 @@ export async function translateService(req: IReqBody) {
         });
     }
     const pairs: [string, any][] = [];
-    const locale = JSON5.parse(content);
+    const locale = eval(`(() => (${content}))()`);
     compressValuesInJson(locale, "", pairs);
     const { requireTranslation, noTranslation } = groupPairs(pairs);
     console.log({
